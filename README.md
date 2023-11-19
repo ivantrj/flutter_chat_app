@@ -17,7 +17,7 @@ Welcome to FlutterChat, a dynamic and feature-rich chat application developed wi
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/flutter-chat-app.git
+   git clone https://github.com/ivantrj/flutter-chat-app.git
    ```
 
 2. **Set Up Firebase:**
