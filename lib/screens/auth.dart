@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLogin = true;
   var _enteredEmail = "";
   var _enteredPassword = "";
+  var _enteredUsername = "";
   File? _selectedImage;
   var _isAuthenticating = false;
 
@@ -60,6 +62,12 @@ class _AuthScreenState extends State<AuthScreen> {
         await storageRef.putFile(_selectedImage!);
         final imageUrl = await storageRef.getDownloadURL();
         print(imageUrl);
+
+        await FirebaseFirestore.instance.collection('users').doc(userCredentials.user!.uid).set({
+          'username': _enteredUsername,
+          'email': _enteredEmail,
+          'image_url': imageUrl,
+        });
       }
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -127,6 +135,22 @@ class _AuthScreenState extends State<AuthScreen> {
                               _enteredEmail = newValue!;
                             },
                           ),
+                          if (!_isLogin)
+                            TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty || value.trim().length < 5) {
+                                  return 'Password must be at least 5 characters';
+                                }
+                                return null;
+                              },
+                              decoration: const InputDecoration(
+                                labelText: 'Username',
+                              ),
+                              enableSuggestions: false,
+                              onSaved: (value) {
+                                _enteredUsername = value!;
+                              },
+                            ),
                           TextFormField(
                             decoration: const InputDecoration(
                               labelText: 'Password',
