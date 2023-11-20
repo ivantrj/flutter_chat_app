@@ -21,8 +21,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FlutterChat',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 63, 17, 177)),
+        useMaterial3: true,
       ),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),

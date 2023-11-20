@@ -54,6 +54,8 @@ class _NewMessageState extends State<NewMessage> {
               enableSuggestions: true,
               decoration: const InputDecoration(
                 labelText: 'Send a message',
+                contentPadding: EdgeInsets.all(10),
+                border: OutlineInputBorder(),
               ),
             ),
           ),
