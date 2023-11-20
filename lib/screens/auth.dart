@@ -39,6 +39,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
     _formKey.currentState!.save();
 
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
     try {
       setState(() {
         _isAuthenticating = true;
@@ -69,8 +71,8 @@ class _AuthScreenState extends State<AuthScreen> {
         });
       }
     } on FirebaseAuthException catch (error) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
+      scaffoldMessenger.clearSnackBars();
+      scaffoldMessenger.showSnackBar(
         SnackBar(
           content: Text(error.message ?? 'Authentication failed.'),
         ),
